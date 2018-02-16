@@ -19,6 +19,7 @@ public class Jaen {
         
         int f;
         int c;
+        int tamañoMaximo=0;
         
         while ( sc.hasNext()) {
         
@@ -42,28 +43,66 @@ public class Jaen {
                 }
             }
             
-            int tamaño = tPlantacion(matriz, f, c);
+             for (int i = 0; i < f; i++) {
+                 
+                for (int j = 0; j < c; j++) {
+                    
+                    if( matriz[i][j] == '#' ) {
+                        
+                        int tamaño = tPlantacion(matriz, i, j); 
+                        if(tamaño>tamañoMaximo) {
+                           
+                            tamañoMaximo=tamaño;
+                        }
+                    }
+                }
+             }
+             
+             System.out.println(tamañoMaximo);
         }
-        
-     }
+    }
     
     public static int tPlantacion(char matriz[][], int f, int c) {
         
-       if ( matriz[0][0] != '#') {
+       int tamaño = 0;
+        
+       if (f < 0 || c < 0 || f >= matriz.length || c >= matriz[0].length) {
+           
+           return 0;
+        }
+       
+       if ( matriz[f][c] == ' ') {
         
            return 0;
        }
        
        if ( matriz[f][c] == '#'){
     
-            return 1 + tPlantacion(matriz, f-1, c);
-        }
-       else {
+           matriz[f][c] = ' ';
+            
+           tamaño++;
+            
+           //Derecha
+           tamaño += tPlantacion(matriz, f + 1, c);
+           //Izquierda
+           tamaño += tPlantacion(matriz, f - 1, c);
+           //Arriba
+           tamaño += tPlantacion(matriz, f, c + 1);
+           //Abajo
+           tamaño += tPlantacion(matriz, f, c - 1);
            
-           return 1 + tPlantaciones(matriz, );
+           return tamaño;
         }
        
-       
-    }
-    
+          return 0;
+    }  
 }
+
+
+        
+   
+       
+        
+        
+
+    
